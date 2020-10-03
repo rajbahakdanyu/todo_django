@@ -18,3 +18,22 @@ def index(request):
     context = {'tasks':tasks, 'form':form}
 
     return render(request, 'content.html', context)
+
+def done(request, pk):
+    task = Task.objects.get(id=pk)
+
+    if task.complete == True:
+        task.complete = False
+    else:
+        task.complete = True
+    
+    task.save()
+
+    return redirect('/')
+
+def delete(request, pk):
+    task = Task.objects.get(id=pk)
+
+    task.delete()
+
+    return redirect('/')
